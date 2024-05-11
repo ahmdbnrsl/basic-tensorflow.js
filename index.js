@@ -60,7 +60,7 @@ tf.tensor4d([
 tf.tensor4d([1, 2, 3, 4, 5, 6, 7, 8], [1, 2, 2, 2]).print();
 
 //and more sampai 6 DIMENSIONS
-//atau bisa langsung pake shade tanpa menuliskan format, contoh:
+//atau bisa langsung pake shape tanpa menuliskan format, contoh:
 tf.tensor([1, 2]).print(); //1 DIMENSIONS,
 tf.tensor([1, 2], [2, 1]).print(); //2 DIMENSIONS
 //And more... sampai 6 dimensi
