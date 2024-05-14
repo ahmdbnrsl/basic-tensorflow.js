@@ -8,7 +8,6 @@ const Y = [];
 
 papa.parse(fileXy, {
     step: (row, parser) => {
-        console.log(row);
         if(row.data[0] !== 'Header') {
             X.push(parseFloat(row.data[1]));
             Y.push(parseFloat(row.data[2]));
@@ -43,27 +42,32 @@ function processs() {
     }
     
     const model = tf.sequential();
+    const optimizing = tf.train.adamax();
     model.add(tf.layers.dense({inputShape: [1], units: 1}));
-    model.compile({optimizer: "sgd", loss: "meanAbsoluteError"});
+    model.compile({optimizer: optimizing, loss: "meanAbsoluteError"});
+    model.summary();
     
     async function train() {
-        const hasil = await model.fit(
-            trainTensor.x,
-            trainTensor.y,
-            {
-                epochs: 78 //proses training
-            }
-        );
-        
+        for (let i = 0; i < 45; i++) {
+            const hasil = await model.fit(
+                trainTensor.x,
+                trainTensor.y,
+                {
+                    epochs: 290 //proses training atau iterasi
+                }
+            );
+            model.layers[0].getWeights()[0].print();
+            model.layers[0].getWeights()[1].print();
+        }
         //evaluation 
-        model.evaluate(testTensor.x, testTensor.y).print();
+        model.evaluate(testTensor.x, testTensor.y);
     }
     
-    train().then(() => {
+   train().then(() => {
         model.predict(tf.tensor2d([
-            [20],
-            [45],
-            [19]
+            [21],
+            [30],
+            [27]
         ])).print(true);
     });
 }
